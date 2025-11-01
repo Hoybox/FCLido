@@ -6,31 +6,30 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-
-// ✅ Render fournit automatiquement un port → ne pas forcer 3000 ni 10000
 const port = process.env.PORT || 8080;
 
-// Résolution du dossier courant
+// Résolution du chemin absolu
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Middleware pour lire le JSON
 app.use(express.json());
 
-// 👉 Servir le frontend Vite (dossier dist)
-app.use(express.static(path.join(__dirname, "dist")));
+// 👉 Servir le dossier dist généré par Vite
+const distPath = path.join(__dirname, "dist");
+app.use(express.static(distPath));
 
-// Exemple de route test
+// ✅ Test d’API simple
 app.get("/api/test", (req, res) => {
   res.json({ message: "API OK ✅" });
 });
 
-// ✅ Gérer toutes les autres routes (React/Vite SPA)
+// ✅ Toutes les autres routes doivent renvoyer index.html
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+  res.sendFile(path.join(distPath, "index.html"));
 });
 
-// ✅ Démarrage du serveur
+// ✅ Lancement du serveur
 app.listen(port, "0.0.0.0", () => {
   console.log(`✅ Serveur lancé sur le port ${port}`);
 });
