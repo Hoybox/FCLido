@@ -1,7 +1,10 @@
 import { Player } from '../types';
 
 // The backend server URL. All Gemini API calls will go through this server.
-const BACKEND_URL = 'http://localhost:3000';
+const BACKEND_URL =
+  import.meta.env.PROD
+    ? "" // En production, les appels se font sur le même domaine
+    : "http://localhost:3000";
 
 export const generateFunFact = async (player: Player): Promise<string> => {
     const prompt = `Génère une anecdote amusante, courte et originale (une seule phrase) pour un joueur de football fictif. L'anecdote doit être dans le style d'un fait "Le saviez-vous ?". Ne répète pas les informations fournies.
