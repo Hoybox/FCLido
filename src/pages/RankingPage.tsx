@@ -1,9 +1,8 @@
-
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { mockRanking, mockMatches } from '../data/mockData';
-import { TeamStats, Match, Role } from '../types';
+import { Page, EventType, Role, Match, TeamStats } from '../services/types'; // ✅ ajout de Match & TeamStats
 import { PencilIcon, TrashIcon, PlusIcon } from '../components/icons/Icons';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../contexts/useAuth';
 
 const MatchModal: React.FC<{ match?: Match | null; onSave: (match: Match) => void; onClose: () => void; }> = ({ match, onSave, onClose }) => {
     const [formData, setFormData] = useState<Partial<Match>>(match || { home: true, result: 'W' });
@@ -13,7 +12,7 @@ const MatchModal: React.FC<{ match?: Match | null; onSave: (match: Match) => voi
         const checked = (e.target as HTMLInputElement).checked;
         setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
     };
-    
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         onSave(formData as Match);
@@ -66,7 +65,7 @@ const RankingPage: React.FC = () => {
     };
 
     const handleSaveMatch = (matchToSave: Match) => {
-        if(matchToSave.id) {
+        if (matchToSave.id) {
             setMatches(prev => prev.map(m => m.id === matchToSave.id ? matchToSave : m));
         } else {
             const newMatch = { ...matchToSave, id: Date.now(), scorers: [], photos: [] };
@@ -87,28 +86,28 @@ const RankingPage: React.FC = () => {
         <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-8 pb-20">
             {(isAddingMatch || editingMatch) && <MatchModal match={editingMatch} onSave={handleSaveMatch} onClose={() => { setIsAddingMatch(false); setEditingMatch(null); }} />}
 
-            {/* Ranking Table */}
+            {/* Tableau de classement */}
             <div className="lg:col-span-2 bg-gray-800/50 rounded-lg p-6 border border-gray-700">
                 <h2 className="text-2xl font-bold text-[#fd6c9e] mb-6">Classement de la Ligue</h2>
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm text-left text-gray-300">
                         <thead className="text-xs text-gray-400 uppercase bg-gray-700/50">
                             <tr>
-                                <th scope="col" className="px-4 py-3">#</th>
-                                <th scope="col" className="px-6 py-3">Équipe</th>
-                                <th scope="col" className="px-2 py-3 text-center">J</th>
-                                <th scope="col" className="px-2 py-3 text-center">G</th>
-                                <th scope="col" className="px-2 py-3 text-center">N</th>
-                                <th scope="col" className="px-2 py-3 text-center">P</th>
-                                <th scope="col" className="px-2 py-3 text-center">DB</th>
-                                <th scope="col" className="px-6 py-3 text-right">Pts</th>
+                                <th className="px-4 py-3">#</th>
+                                <th className="px-6 py-3">Équipe</th>
+                                <th className="px-2 py-3 text-center">J</th>
+                                <th className="px-2 py-3 text-center">G</th>
+                                <th className="px-2 py-3 text-center">N</th>
+                                <th className="px-2 py-3 text-center">P</th>
+                                <th className="px-2 py-3 text-center">DB</th>
+                                <th className="px-6 py-3 text-right">Pts</th>
                             </tr>
                         </thead>
                         <tbody>
                             {ranking.map((team) => (
                                 <tr key={team.rank} className={`border-b border-gray-700 ${team.name === 'FC LIDO' ? 'bg-rose-500/10' : ''}`}>
                                     <td className="px-4 py-4 font-medium">{team.rank}</td>
-                                    <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap">{team.name}</th>
+                                    <th className="px-6 py-4 font-medium text-white whitespace-nowrap">{team.name}</th>
                                     <td className="px-2 py-4 text-center">{team.played}</td>
                                     <td className="px-2 py-4 text-center">{team.wins}</td>
                                     <td className="px-2 py-4 text-center">{team.draws}</td>
@@ -122,7 +121,7 @@ const RankingPage: React.FC = () => {
                 </div>
             </div>
 
-            {/* Match History */}
+            {/* Derniers matchs */}
             <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-bold text-[#fd6c9e]">Derniers Matchs</h2>
@@ -152,7 +151,7 @@ const RankingPage: React.FC = () => {
                 </div>
             </div>
 
-            {/* Match Details Modal */}
+            {/* Détails d’un match */}
             {selectedMatch && (
                 <div className="modal-overlay fixed inset-0 bg-black/70 flex items-center justify-center backdrop-blur-sm" onClick={() => setSelectedMatch(null)}>
                     <div className="bg-gray-800 rounded-lg shadow-xl p-8 max-w-2xl w-full mx-4 border border-rose-500" onClick={e => e.stopPropagation()}>
@@ -168,9 +167,9 @@ const RankingPage: React.FC = () => {
                             <h4 className="font-semibold text-rose-400">Résumé:</h4>
                             <p className="text-gray-300">{selectedMatch.summary}</p>
                         </div>
-                         <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-4">
                             {selectedMatch.photos.map((photo, i) => (
-                                <img key={i} src={photo} alt={`Match photo ${i + 1}`} className="rounded-lg object-cover w-full h-40"/>
+                                <img key={i} src={photo} alt={`Match photo ${i + 1}`} className="rounded-lg object-cover w-full h-40" />
                             ))}
                         </div>
                         <button onClick={() => setSelectedMatch(null)} className="mt-6 bg-rose-600 text-white px-4 py-2 rounded-md hover:bg-rose-700 transition-colors">Fermer</button>
@@ -182,3 +181,5 @@ const RankingPage: React.FC = () => {
 };
 
 export default RankingPage;
+
+

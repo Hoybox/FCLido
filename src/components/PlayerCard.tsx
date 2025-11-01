@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import { Player } from '../types';
 import { PencilIcon, TrashIcon, SparklesIcon } from './icons/Icons';
 import { generateFunFact } from '../services/geminiService';
@@ -48,7 +48,7 @@ const StatsEditor: React.FC<{ player: Player, onUpdate: (player: Player) => void
         } else { // Diminution
             setEditedPlayer(p => {
                 const newTotal = totalStats - 1;
-                // Si le total était au-dessus de la limite de base (350), la diminution rend un point "non assigné"
+                // Si le total Ã©tait au-dessus de la limite de base (350), la diminution rend un point "non assignÃ©"
                 const newUnassigned = newTotal >= 350 ? p.unassignedPoints + 1 : p.unassignedPoints;
                 return { ...p, [stat]: newValue, unassignedPoints: newUnassigned };
             });
@@ -73,7 +73,7 @@ const StatsEditor: React.FC<{ player: Player, onUpdate: (player: Player) => void
             ))}
              <div className="text-center font-bold pt-2">
                  <p>Total: <span className={totalStats > 350 ? "text-green-400" : "text-white"}>{totalStats}</span> / 350</p>
-                 <p>Points à assigner: <span className="text-yellow-400">{editedPlayer.unassignedPoints}</span></p>
+                 <p>Points Ã  assigner: <span className="text-yellow-400">{editedPlayer.unassignedPoints}</span></p>
              </div>
              <div className="flex justify-end gap-2 pt-2">
                 <button onClick={onCancel} className="px-3 py-1 rounded bg-gray-600 hover:bg-gray-500 text-xs">Annuler</button>
@@ -144,7 +144,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, isAdmin, onUpdate, onEd
                     <div className="flex-grow overflow-y-auto pr-2">
                         <div className="space-y-1 text-xs">
                             <div className="flex justify-between border-b border-gray-700 pb-1"><span className="font-semibold text-gray-400">Surnom:</span> <span className="text-white font-bold">"{player.nickname}"</span></div>
-                            <div className="flex justify-between border-b border-gray-700 pb-1"><span className="font-semibold text-gray-400">Âge:</span> <span className="text-white">{player.age} ans</span></div>
+                            <div className="flex justify-between border-b border-gray-700 pb-1"><span className="font-semibold text-gray-400">Ã‚ge:</span> <span className="text-white">{player.age} ans</span></div>
                             <div className="flex justify-between border-b border-gray-700 pb-1"><span className="font-semibold text-gray-400">Taille:</span> <span className="text-white">{player.height} cm</span></div>
                             <div className="flex justify-between border-b border-gray-700 pb-1"><span className="font-semibold text-gray-400">Pied Fort:</span> <span className="text-white">{player.strongFoot}</span></div>
                         </div>
@@ -167,7 +167,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, isAdmin, onUpdate, onEd
                                 <div className="mt-3">
                                     <h4 className="font-bold text-rose-400 mb-1">Le Saviez-vous ?</h4>
                                     <p className="text-gray-300 italic text-xs h-12 overflow-y-auto pr-2">
-                                        {isLoadingFact ? 'Génération en cours...' : player.anecdote}
+                                        {isLoadingFact ? 'GÃ©nÃ©ration en cours...' : player.anecdote}
                                     </p>
                                 </div>
                             </>
@@ -183,7 +183,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, isAdmin, onUpdate, onEd
                                     className="w-full bg-rose-600 text-white px-3 py-1.5 rounded-md text-xs hover:bg-rose-700 flex items-center justify-center gap-2 transition-all disabled:bg-gray-500"
                                 >
                                     <SparklesIcon />
-                                    {isLoadingFact ? 'Création...' : "Générer Anecdote (IA)"}
+                                    {isLoadingFact ? 'CrÃ©ation...' : "GÃ©nÃ©rer Anecdote (IA)"}
                                 </button>
                                 <div className="flex gap-2">
                                      <button onClick={() => setIsEditingStats(true)} disabled={isEditingStats} className="w-full p-1.5 bg-green-600/80 text-white rounded-md hover:bg-green-500 transition-colors flex items-center justify-center gap-1 text-xs disabled:bg-gray-500 disabled:cursor-not-allowed">
@@ -209,3 +209,6 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, isAdmin, onUpdate, onEd
 };
 
 export default PlayerCard;
+
+
+

@@ -1,6 +1,6 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { User, Role } from '../types';
-import useLocalStorage from './useLocalStorage';
+﻿import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { User, AuthContextType } from "../services/types";
+import useLocalStorage from '../hooks/useLocalStorage';
 
 interface UserCredentials {
     username: string;
@@ -11,7 +11,7 @@ interface UserCredentials {
 
 const defaultUsers: UserCredentials[] = [
     { username: 'Admin', login_id: 'admin', password_hash: 'lido2025', role: Role.Admin },
-    { username: 'Éditeur', login_id: 'editor', password_hash: 'lido2025', role: Role.Editor },
+    { username: 'Ã‰diteur', login_id: 'editor', password_hash: 'lido2025', role: Role.Editor },
 ];
 
 interface AuthContextType {
@@ -43,7 +43,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const changePassword = (currentUsername: string, oldPass: string, newPass: string): { success: boolean, message: string } => {
         const userIndex = usersDB.findIndex(u => u.username === currentUsername);
         if (userIndex === -1) {
-            return { success: false, message: 'Utilisateur non trouvé.' };
+            return { success: false, message: 'Utilisateur non trouvÃ©.' };
         }
 
         const userToUpdate = usersDB[userIndex];
@@ -52,7 +52,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
 
         if (newPass.length < 4) {
-            return { success: false, message: 'Le nouveau mot de passe doit contenir au moins 4 caractères.' };
+            return { success: false, message: 'Le nouveau mot de passe doit contenir au moins 4 caractÃ¨res.' };
         }
 
         const updatedUser = { ...userToUpdate, password_hash: newPass };
@@ -60,7 +60,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         newUsersDB[userIndex] = updatedUser;
         setUsersDB(newUsersDB);
 
-        return { success: true, message: 'Mot de passe mis à jour avec succès !' };
+        return { success: true, message: 'Mot de passe mis Ã  jour avec succÃ¨s !' };
     };
 
     return (
@@ -77,3 +77,6 @@ export const useAuth = (): AuthContextType => {
     }
     return context;
 };
+
+
+

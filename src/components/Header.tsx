@@ -1,7 +1,7 @@
-
+﻿
 import React, { useState, useEffect, useRef } from 'react';
 import Logo from './Logo';
-import { Page, EventType, Role } from '../types';
+import { Page, EventType, Role } from "../services/types";
 import { 
     UsersIcon, 
     ChartBarIcon, 
@@ -21,7 +21,7 @@ import {
     LogoutIcon
 } from './icons/Icons';
 import { mockCalendarEvents } from '../data/mockData';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../contexts/useAuth';
 
 const EventIcon: React.FC<{type: EventType, className?: string}> = ({ type, className = "h-5 w-5 mr-3 shrink-0 inline-block" }) => {
     switch(type) {
@@ -74,7 +74,7 @@ const Header: React.FC<HeaderProps> = ({ activePage, setActivePage }) => {
     const handleShare = async () => {
         const shareData = {
             title: 'Invitation FC LIDO de Toulon',
-            text: `Rejoignez-moi sur l'application du FC LIDO pour gérer l'équipe et voir les dernières infos !`,
+            text: `Rejoignez-moi sur l'application du FC LIDO pour gÃ©rer l'Ã©quipe et voir les derniÃ¨res infos !`,
             url: window.location.href,
         };
 
@@ -87,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({ activePage, setActivePage }) => {
             }
         } else {
             // Fallback for browsers that do not support the Web Share API
-            alert("La fonction de partage n'est pas supportée sur votre navigateur. Vous pouvez copier l'URL de la page pour la partager.");
+            alert("La fonction de partage n'est pas supportÃ©e sur votre navigateur. Vous pouvez copier l'URL de la page pour la partager.");
         }
     };
     
@@ -169,10 +169,10 @@ const Header: React.FC<HeaderProps> = ({ activePage, setActivePage }) => {
                 URL.revokeObjectURL(url);
             } catch (error) {
                 console.error("Failed to create backup file:", error);
-                alert("Une erreur est survenue lors de la création de la sauvegarde.");
+                alert("Une erreur est survenue lors de la crÃ©ation de la sauvegarde.");
             }
         } else {
-            alert("Aucune donnée à sauvegarder.");
+            alert("Aucune donnÃ©e Ã  sauvegarder.");
         }
     };
 
@@ -188,7 +188,7 @@ const Header: React.FC<HeaderProps> = ({ activePage, setActivePage }) => {
         reader.onload = (e) => {
             try {
                 const text = e.target?.result;
-                if (typeof text !== 'string') throw new Error("Le fichier n'a pas pu être lu.");
+                if (typeof text !== 'string') throw new Error("Le fichier n'a pas pu Ãªtre lu.");
                 const data = JSON.parse(text);
 
                 Object.keys(data).forEach(key => {
@@ -196,16 +196,16 @@ const Header: React.FC<HeaderProps> = ({ activePage, setActivePage }) => {
                     localStorage.setItem(key, value);
                 });
                 
-                alert("Données chargées avec succès ! L'application va se rafraîchir.");
+                alert("DonnÃ©es chargÃ©es avec succÃ¨s ! L'application va se rafraÃ®chir.");
                 window.location.reload();
 
             } catch (error) {
-                console.error("Échec du chargement des données :", error);
+                console.error("Ã‰chec du chargement des donnÃ©es :", error);
                 alert("Erreur lors du chargement du fichier. Assurez-vous que c'est un fichier de sauvegarde valide.");
             }
         };
         reader.readAsText(file);
-        event.target.value = ''; // Permet de recharger le même fichier
+        event.target.value = ''; // Permet de recharger le mÃªme fichier
     };
 
     if (!user) return null;
@@ -241,17 +241,17 @@ const Header: React.FC<HeaderProps> = ({ activePage, setActivePage }) => {
                                 <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept=".json" />
                                 <button
                                     onClick={handleLoadClick}
-                                    title="Charger les données depuis un fichier"
+                                    title="Charger les donnÃ©es depuis un fichier"
                                     className="bg-gray-700 hover:bg-green-600 text-white p-2 rounded-md transition-colors"
-                                    aria-label="Charger les données"
+                                    aria-label="Charger les donnÃ©es"
                                 >
                                     <ArrowUpTrayIcon className="h-5 w-5" />
                                 </button>
                                 <button
                                     onClick={handleSaveData}
-                                    title="Sauvegarder les données locales"
+                                    title="Sauvegarder les donnÃ©es locales"
                                     className="bg-gray-700 hover:bg-blue-600 text-white p-2 rounded-md transition-colors"
-                                    aria-label="Sauvegarder les données"
+                                    aria-label="Sauvegarder les donnÃ©es"
                                 >
                                     <ArrowDownTrayIcon className="h-5 w-5" />
                                 </button>
@@ -267,9 +267,9 @@ const Header: React.FC<HeaderProps> = ({ activePage, setActivePage }) => {
                         </button>
                          <button
                             onClick={logout}
-                            title="Se déconnecter"
+                            title="Se dÃ©connecter"
                             className="bg-gray-700 hover:bg-red-600 text-white p-2 rounded-md transition-colors"
-                            aria-label="Se déconnecter"
+                            aria-label="Se dÃ©connecter"
                         >
                             <LogoutIcon className="h-5 w-5" />
                         </button>
@@ -311,3 +311,6 @@ const Header: React.FC<HeaderProps> = ({ activePage, setActivePage }) => {
 };
 
 export default Header;
+
+
+

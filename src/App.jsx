@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+﻿import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import PlayersPage from "./pages/PlayersPage";
+import ClubPage from "./pages/ClubPage";
+import MediaPage from "./pages/MediaPage";
+import PaniniPage from "./pages/PaniniPage";
+import PenaltyPage from "./pages/PenaltyPage";
+import RankingPage from "./pages/RankingPage";
+import CalendarPage from "./pages/CalendarPage";
+import LoginPage from "./pages/LoginPage";
+import Header from "./components/Header";
+import { AuthProvider } from "./contexts/AuthContext"; // ✅ Contexte d’authentification global
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <AuthProvider>
+        <Header />
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/club" element={<ClubPage />} />
+            <Route path="/players" element={<PlayersPage />} />
+            <Route path="/media" element={<MediaPage />} />
+            <Route path="/panini" element={<PaniniPage />} />
+            <Route path="/penalty" element={<PenaltyPage />} />
+            <Route path="/ranking" element={<RankingPage />} />
+            <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Routes>
+        </main>
+      </AuthProvider>
+    </Router>
+  );
 }
 
-export default App
+export default App;

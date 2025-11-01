@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { AlbumSlotData } from '../types';
 import PaniniCard from './PaniniCard';
 
@@ -25,3 +25,6 @@ const AlbumSlot: React.FC<AlbumSlotProps> = ({ slot }) => {
 };
 
 export default AlbumSlot;
+
+
+

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { PaniniCardData } from '../types';
 
 interface PaniniCardProps {
@@ -33,3 +33,6 @@ const PaniniCard: React.FC<PaniniCardProps> = ({ card, onClick }) => {
 };
 
 export default PaniniCard;
+
+
+

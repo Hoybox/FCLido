@@ -1,4 +1,4 @@
-// Fix: Import `React` to use types like `React.Dispatch`.
+﻿// Fix: Import `React` to use types like `React.Dispatch`.
 import React, { useState, useEffect } from 'react';
 
 function useLocalStorage<T>(key: string, initialValue: T): [T, React.Dispatch<React.SetStateAction<T>>] {
@@ -29,3 +29,6 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, React.Dispatch<Re
 }
 
 export default useLocalStorage;
+
+
+

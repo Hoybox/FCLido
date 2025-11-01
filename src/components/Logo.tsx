@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 import { useSite } from '../hooks/useSite';
 
@@ -8,3 +8,6 @@ const Logo: React.FC<{ className?: string; alt?: string }> = ({ className, alt =
 };
 
 export default Logo;
+
+
+

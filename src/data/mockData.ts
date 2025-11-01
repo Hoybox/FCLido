@@ -1,4 +1,4 @@
-import { Player, Match, TeamStats, CalendarEvent, EventType, ClubInfo } from '../types';
+﻿import { Player, Match, TeamStats, CalendarEvent, EventType, ClubInfo } from "../services/types";
 
 export const mockPlayers: Player[] = [
     {
@@ -6,11 +6,11 @@ export const mockPlayers: Player[] = [
         firstName: 'Jean',
         lastName: 'Dupont',
         nickname: 'Le Roc',
-        position: 'Défenseur Central',
+        position: 'DÃ©fenseur Central',
         age: 28,
         height: 188,
         strongFoot: 'Droit',
-        anecdote: 'On dit qu\'il pourrait arrêter un TGV avec un tacle. Personne n\'a jamais osé vérifier.',
+        anecdote: 'On dit qu\'il pourrait arrÃªter un TGV avec un tacle. Personne n\'a jamais osÃ© vÃ©rifier.',
         awards: ['Meilleur Tacleur 2023'],
         goals: 5,
         assists: 2,
@@ -25,15 +25,15 @@ export const mockPlayers: Player[] = [
     },
     {
         id: 2,
-        firstName: 'Léa',
+        firstName: 'LÃ©a',
         lastName: 'Martin',
-        nickname: 'La Flèche',
+        nickname: 'La FlÃ¨che',
         position: 'Attaquante',
         age: 23,
         height: 172,
         strongFoot: 'Gauche',
-        anecdote: 'Sa vitesse est telle qu\'elle arrive souvent au stade avant le bus de l\'équipe.',
-        awards: ['Soulier d\'Or Régional 2022'],
+        anecdote: 'Sa vitesse est telle qu\'elle arrive souvent au stade avant le bus de l\'Ã©quipe.',
+        awards: ['Soulier d\'Or RÃ©gional 2022'],
         goals: 25,
         assists: 15,
         photoUrl: 'https://picsum.photos/seed/player2/400/500',
@@ -87,27 +87,30 @@ const addDays = (date: Date, days: number): Date => {
 
 
 export const mockMatches: Match[] = [
-    { id: 1, date: formatDate(addDays(today, -7)), opponent: 'AS La Seyne', home: true, score: '3-1', result: 'W', scorers: ['Léa Martin (2)', 'Lucas Bernard'], summary: 'Superbe victoire à domicile...', photos: ['https://picsum.photos/seed/match1/800/600', 'https://picsum.photos/seed/match1-2/800/600'] },
-    { id: 2, date: formatDate(addDays(today, -14)), opponent: 'US Ollioules', home: false, score: '1-1', result: 'D', scorers: ['Léa Martin'], summary: 'Match nul arraché à l\'extérieur...', photos: ['https://picsum.photos/seed/match2/800/600'] },
-    { id: 3, date: formatDate(addDays(today, -21)), opponent: 'Six-Fours FC', home: true, score: '2-0', result: 'W', scorers: ['Lucas Bernard', 'Jean Dupont'], summary: 'Victoire maîtrisée...', photos: ['https://picsum.photos/seed/match3/800/600', 'https://picsum.photos/seed/match3-2/800/600'] },
+    { id: 1, date: formatDate(addDays(today, -7)), opponent: 'AS La Seyne', home: true, score: '3-1', result: 'W', scorers: ['LÃ©a Martin (2)', 'Lucas Bernard'], summary: 'Superbe victoire Ã  domicile...', photos: ['https://picsum.photos/seed/match1/800/600', 'https://picsum.photos/seed/match1-2/800/600'] },
+    { id: 2, date: formatDate(addDays(today, -14)), opponent: 'US Ollioules', home: false, score: '1-1', result: 'D', scorers: ['LÃ©a Martin'], summary: 'Match nul arrachÃ© Ã  l\'extÃ©rieur...', photos: ['https://picsum.photos/seed/match2/800/600'] },
+    { id: 3, date: formatDate(addDays(today, -21)), opponent: 'Six-Fours FC', home: true, score: '2-0', result: 'W', scorers: ['Lucas Bernard', 'Jean Dupont'], summary: 'Victoire maÃ®trisÃ©e...', photos: ['https://picsum.photos/seed/match3/800/600', 'https://picsum.photos/seed/match3-2/800/600'] },
 ];
 
 export const mockCalendarEvents: CalendarEvent[] = [
     { id: 1, date: addDays(today, 7), title: 'Match vs AS La Seyne', type: EventType.Match },
-    { id: 2, date: addDays(today, 2), title: 'Entraînement tactique', type: EventType.Training },
-    { id: 3, date: addDays(today, 18), title: 'Tournoi de l\'été', type: EventType.Tournament },
-    { id: 4, date: addDays(today, 45), title: 'Trêve estivale', type: EventType.Break },
-    { id: 5, date: addDays(today, -5), title: 'Réunion de bureau', type: EventType.Extra },
+    { id: 2, date: addDays(today, 2), title: 'EntraÃ®nement tactique', type: EventType.Training },
+    { id: 3, date: addDays(today, 18), title: 'Tournoi de l\'Ã©tÃ©', type: EventType.Tournament },
+    { id: 4, date: addDays(today, 45), title: 'TrÃªve estivale', type: EventType.Break },
+    { id: 5, date: addDays(today, -5), title: 'RÃ©union de bureau', type: EventType.Extra },
 ];
 
 export const mockClubInfo: ClubInfo = {
-    president: 'M. Le Président',
-    treasurer: 'Mme. La Trésorière',
+    president: 'M. Le PrÃ©sident',
+    treasurer: 'Mme. La TrÃ©soriÃ¨re',
     coach: 'Coach Tactico',
     steward: 'M. L\'Intendant',
-    awards: ['Champion Régional 2021', 'Coupe du Var 2019'],
+    awards: ['Champion RÃ©gional 2021', 'Coupe du Var 2019'],
     news: [
         { id: 1, title: 'Le FC LIDO recrute !', content: 'Nous cherchons de nouveaux talents pour la saison prochaine. Contactez-nous !', date: formatDate(addDays(today, -3)) },
-        { id: 2, title: 'Nouveau maillot dévoilé', content: 'Découvrez nos nouvelles couleurs pour la saison 2024-2025 : le rose et noir sont à l\'honneur !', date: formatDate(addDays(today, -10)) },
+        { id: 2, title: 'Nouveau maillot dÃ©voilÃ©', content: 'DÃ©couvrez nos nouvelles couleurs pour la saison 2024-2025 : le rose et noir sont Ã  l\'honneur !', date: formatDate(addDays(today, -10)) },
     ]
 };
+
+
+
