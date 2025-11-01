@@ -1,62 +1,36 @@
 import express from "express";
-import cors from "cors";
-import fetch from "node-fetch";
+import path from "path";
+import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
-app.use(cors());
+
+// ✅ Render fournit automatiquement un port → ne pas forcer 3000 ni 10000
+const port = process.env.PORT || 8080;
+
+// Résolution du dossier courant
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Middleware pour lire le JSON
 app.use(express.json());
 
-const API_KEY = process.env.GEMINI_API_KEY; // 🔑 ta clé (à ajouter sur Render)
+// 👉 Servir le frontend Vite (dossier dist)
+app.use(express.static(path.join(__dirname, "dist")));
 
-const BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models";
-
-app.post("/generate-fun-fact", async (req, res) => {
-  const { prompt } = req.body;
-
-  try {
-    const response = await fetch(
-      `${BASE_URL}/gemini-pro:generateContent?key=${API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
-      }
-    );
-
-    const data = await response.json();
-    const fact = data.candidates?.[0]?.content?.parts?.[0]?.text || "Aucune réponse";
-    res.json({ fact });
-  } catch (error) {
-    console.error("Erreur API Gemini:", error);
-    res.status(500).json({ error: "Erreur interne du serveur" });
-  }
+// Exemple de route test
+app.get("/api/test", (req, res) => {
+  res.json({ message: "API OK ✅" });
 });
 
-app.post("/generate-panini-image", async (req, res) => {
-  const { prompt } = req.body;
-
-  try {
-    const response = await fetch(
-      `${BASE_URL}/gemini-pro-vision:generateContent?key=${API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-        }),
-      }
-    );
-
-    const data = await response.json();
-    const imageUrl =
-      data.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "https://via.placeholder.com/300x400.png?text=Erreur";
-    res.json({ imageUrl });
-  } catch (error) {
-    console.error("Erreur image:", error);
-    res.status(500).json({ error: "Erreur serveur" });
-  }
+// ✅ Gérer toutes les autres routes (React/Vite SPA)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`✅ Serveur lancé sur le port ${PORT}`));
+// ✅ Démarrage du serveur
+app.listen(port, "0.0.0.0", () => {
+  console.log(`✅ Serveur lancé sur le port ${port}`);
+});
