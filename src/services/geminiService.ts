@@ -3,7 +3,7 @@ import { Player } from '../types';
 // The backend server URL. All Gemini API calls will go through this server.
 const BACKEND_URL =
   import.meta.env.PROD
-    ? "" // En production, les appels se font sur le même domaine
+    ? window.location.origin // En production, on utilise le même domaine Render
     : "http://localhost:3000";
 
 export const generateFunFact = async (player: Player): Promise<string> => {
