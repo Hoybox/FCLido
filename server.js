@@ -9,32 +9,32 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Résolution correcte des chemins sur Render (ESM compatible)
+// ✅ Correction ESM pour __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Middleware pour parser le JSON
-app.use(express.json());
-
-// ✅ Sert les fichiers du dossier "dist" (build Vite)
+// ✅ Chemin absolu vers le dossier build (Vite)
 const distPath = path.join(__dirname, "dist");
+
+// ✅ Middleware
+app.use(express.json());
 app.use(express.static(distPath));
 
-// ✅ Route API de test
+// ✅ Route de test
 app.get("/status", (req, res) => {
   res.json({
     status: "✅ OK",
-    message: "Le serveur Express fonctionne parfaitement sur Render !",
-    timestamp: new Date().toISOString(),
+    message: "Le serveur fonctionne sur Render !",
+    date: new Date().toISOString(),
   });
 });
 
-// ✅ Toutes les routes React renvoient index.html
+// ✅ Fallback : renvoie index.html pour React Router
 app.get("*", (req, res) => {
   res.sendFile(path.join(distPath, "index.html"));
 });
 
-// 🚀 Démarrage du serveur
+// ✅ Démarrage du serveur (important pour Render)
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🚀 Serveur en ligne sur le port ${PORT}`);
+  console.log(`🚀 Serveur lancé sur le port ${PORT}`);
 });
