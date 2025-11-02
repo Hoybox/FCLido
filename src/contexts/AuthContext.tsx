@@ -1,18 +1,48 @@
-﻿import React, { createContext, useContext, useState, ReactNode } from "react";
+﻿import React, { createContext, useState, useEffect, ReactNode } from "react";
+
+interface User {
+  id: string;
+  name: string;
+  role: string;
+}
 
 interface AuthContextType {
-  user: string | null;
-  login: (username: string) => void;
+  user: User | null;
+  login: (userData: User) => void;
   logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<string | null>(null);
+interface AuthProviderProps {
+  children: ReactNode;
+}
 
-  const login = (username: string) => setUser(username);
-  const logout = () => setUser(null);
+/**
+ * ✅ Fournit le contexte d’authentification global à l’application.
+ */
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+
+  // 🔹 Charge un éventuel utilisateur depuis le localStorage
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
+  // 🔹 Fonction de connexion
+  const login = (userData: User) => {
+    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
+  };
+
+  // 🔹 Fonction de déconnexion
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+  };
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
@@ -20,13 +50,3 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth doit Ãªtre utilisÃ© Ã  l'intÃ©rieur d'un AuthProvider");
-  }
-  return context;
-};
-
-

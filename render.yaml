@@ -1,0 +1,13 @@
+# render.yaml — Configuration du déploiement Render
+
+services:
+  - type: web
+    name: football-club-lido
+    env: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: node server.js
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+    autoDeploy: true

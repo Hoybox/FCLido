@@ -1,6 +1,6 @@
 ﻿// src/services/types.ts
 
-// ðŸ§© DÃ©finition des types utilisÃ©s dans le projet
+// 🧩 Définition des types utilisés dans le projet
 
 export interface Player {
   firstName: string;
@@ -9,9 +9,10 @@ export interface Player {
   position?: string;
   age?: number;
   strongFoot?: string;
+  image?: string;
 }
 
-// âœ… Types ajoutÃ©s pour corriger les erreurs
+// ✅ Types généraux du site
 export enum Page {
   HOME = "home",
   PLAYERS = "players",
@@ -37,5 +38,8 @@ export enum Role {
   VISITOR = "visitor"
 }
 
-
-
+export interface User {
+  username: string;
+  role: Role;
+  token?: string;
+}

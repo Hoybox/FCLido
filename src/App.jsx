@@ -1,4 +1,6 @@
-﻿import React from "react";
+﻿// src/App.jsx
+
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import PlayersPage from "./pages/PlayersPage";
@@ -10,7 +12,7 @@ import RankingPage from "./pages/RankingPage";
 import CalendarPage from "./pages/CalendarPage";
 import LoginPage from "./pages/LoginPage";
 import Header from "./components/Header";
-import { AuthProvider } from "./contexts/AuthContext"; // ✅ Contexte d’authentification global
+import { AuthProvider } from "./contexts/AuthContext";
 import "./App.css";
 
 function App() {
