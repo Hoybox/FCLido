@@ -3,24 +3,25 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
-import cors from "cors";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// 📁 Configuration des chemins
+// Résolution correcte des chemins sur Render (ESM compatible)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 🛡️ Middleware
-app.use(cors());
+// Middleware pour parser le JSON
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "dist")));
 
-// ✅ Route de test pour vérifier le fonctionnement sur Render
-app.get("/status", (_, res) => {
+// ✅ Sert les fichiers du dossier "dist" (build Vite)
+const distPath = path.join(__dirname, "dist");
+app.use(express.static(distPath));
+
+// ✅ Route API de test
+app.get("/status", (req, res) => {
   res.json({
     status: "✅ OK",
     message: "Le serveur Express fonctionne parfaitement sur Render !",
@@ -28,12 +29,12 @@ app.get("/status", (_, res) => {
   });
 });
 
-// 🌐 Toutes les autres routes redirigent vers ton index.html
-app.get("*", (_, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+// ✅ Toutes les routes React renvoient index.html
+app.get("*", (req, res) => {
+  res.sendFile(path.join(distPath, "index.html"));
 });
 
-// 🚀 Lancement du serveur
+// 🚀 Démarrage du serveur
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Serveur en ligne sur le port ${PORT}`);
 });
