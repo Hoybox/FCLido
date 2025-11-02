@@ -1,20 +1,20 @@
-// vite.config.js
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import path from "path";
 
-// ✅ Configuration Vite compatible Render
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: "dist",
-    emptyOutDir: true,
+    outDir: "dist", // dossier de build pour Express
+    emptyOutDir: true, // nettoie avant chaque build
   },
   server: {
+    host: "0.0.0.0",
     port: 5173,
-    host: true,
   },
   preview: {
-    port: 4173,
-    host: true,
+    host: "0.0.0.0",
+    port: 10000, // pour Render
   },
+  base: "./", // ⚠️ <-- CHANGE ICI : "./" au lieu de "/"
 });
